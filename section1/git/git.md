@@ -1,8 +1,8 @@
 - 혼자서
     1. fork한 repository 가져오기
-    ```bash
-    git status
-    ```
+        ```bash
+        git status
+        ```
     2. repository 상태 확인
     ```bash
     git clone repository명
@@ -15,7 +15,7 @@
         ```bash
         git restore 로컬파일명
         ```
-    5. staging area의 내용을 commit
+    4. staging area의 내용을 commit
     ```bash
     git commit -m "커밋 명"
     ```
@@ -25,7 +25,7 @@
         또는 
         git reset HEAD^
         ```
-    7.  commit한 내용을 github repository에 등록
+    5.  commit한 내용을 github repository에 등록
     ```bash
     git push repository명 branch명
     ```
