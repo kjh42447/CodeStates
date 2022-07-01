@@ -11,7 +11,7 @@
     ```bash
     git add 로컬파일명
     ```
-        - add 취소
+    - add 취소
         ```bash
         git restore 로컬파일명
         ```
@@ -19,7 +19,7 @@
     ```bash
     git commit -m "커밋 명"
     ```
-        + 커밋 취소
+    + 커밋 취소
          ```bash
         git reset HEAD-1 
         또는 
@@ -29,7 +29,7 @@
     ```bash
     git push repository명 branch명
     ```
-        - 커밋 로그 확인
+    - 커밋 로그 확인
         ```bash
         git log
         ```
@@ -46,7 +46,7 @@
     ```bash
     git remote add 페어repository명 링크
     ```
-        - 리모트 확인
+    - 리모트 확인
         ```bash
         git remote -v
         ```
