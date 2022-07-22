@@ -11,9 +11,7 @@ public class Test {
 	// 아래 코드는 변경하지 마세요.
   
   public void main(String[] args) {
-      List<String> male = Arrays.asList("김코딩", "최자바", "김코츠");
-      List<String> female = Arrays.asList("박해커", "김유클", "김코딩");
-      List<String> output = findPeople(male, female, "김");
-      System.out.println(output);
+      Object s = true;
+      System.out.println(s.toString());
   }
 }
