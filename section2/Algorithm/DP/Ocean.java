@@ -1,7 +1,8 @@
+package section2.Algorithm.DP;
 import java.util.*;
 
-public class Test {
-    public static long ocean(int target, int[] type) {
+public class Ocean {
+    public long ocean(int target, int[] type) {
         long[][] dp = new long[type.length][target+1];    //dp[i][j] = ocean(j, type[:i])
         // {a, b, c, ...} 일때
         //                                                      0 or 1
@@ -34,15 +35,4 @@ public class Test {
         }
         return dp[type.length-1][target];
     }
-  
-  public static void main(String[] args) {
-      long output = ocean(50, new int[]{10, 20, 50});
-      System.out.println(output); // 4
-
-      output = ocean(100, new int[]{10, 20, 50});
-      System.out.println(output); // 10
-
-      output = ocean(30, new int[]{5, 6, 7});
-      System.out.println(output); // 4
-  }
 }

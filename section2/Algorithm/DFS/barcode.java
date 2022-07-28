@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Test {
+public class Barcode {
     public static boolean checkStack(int[] stack, int index) {
         boolean flag = true;
         for (int i = 0; i < (index+1)/2; i++) {
