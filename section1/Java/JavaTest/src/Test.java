@@ -1,48 +1,78 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Test {
-    public static long ocean(int target, int[] type) {
-        long[][] dp = new long[type.length][target+1];    //dp[i][j] = ocean(j, type[:i])
-        // {a, b, c, ...} 일때
-        //                                                      0 or 1
-        // ocean(target, {a, b, c}) = ocean(target, {a, b}) + ocean(target, {c}) + ocean(target-(c*n), {a, b})
-
-        // 먼저 dp[0][]만 초기화
-        for (int i = 1; i <= target; i++) {
-            if (i % type[0] == 0)   dp[0][i] = 1;
-        }
-
-        // 윗 행을 참조 가능하므로 반복 시작
-        for (int i = 1; i < type.length; i++) {
-            for (int j = 1; j <= target; j++) {
-                // ocean(target, {a, b, c}) = ocean(target, {a, b}) + ocean(target, {c}) + ocean(target-(c*n), {a, b})
-                dp[i][j] = dp[i - 1][j];
-                if (j % type[i] == 0)   dp[i][j] += 1;
-                int ti = type[i];
-                for (int k = ti; k < j; k += ti) {
-                    dp[i][j] += dp[i-1][j - k];
+    static void combination(ArrayList<String[]> result, String[] arr, boolean visited[], int depth, int n, int r){
+        if (r == 0) {
+            ArrayList<String> s = new ArrayList<>();
+            for (int i = 0; i < visited.length; i++) {
+                if (visited[i]) {
+                    s.add(arr[i]);
                 }
             }
+            result.add(s.toArray(new String[s.size()]));
+            return;
         }
 
-        for (int i = 0; i < dp.length; i++) {
-            long[] inArr = dp[i];
-            for (int j = 0; j < inArr.length; j++) {
-                System.out.print(inArr[j] + " ");
-            }
-            System.out.println();
+        if(depth==n){
+            return;
         }
-        return dp[type.length-1][target];
+
+        visited[depth] = true;
+        combination(result, arr, visited,depth+1, n, r-1);
+
+        visited[depth] = false;
+        combination(result, arr, visited,depth+1, n, r);
+
+        return;
     }
-  
-  public static void main(String[] args) {
-      long output = ocean(50, new int[]{10, 20, 50});
-      System.out.println(output); // 4
 
-      output = ocean(100, new int[]{10, 20, 50});
-      System.out.println(output); // 10
+    // 문자열 배열 정렬 비교자 클래스
+    public static class StringArrayComparator implements Comparator<String[]> {
 
-      output = ocean(30, new int[]{5, 6, 7});
-      System.out.println(output); // 4
+        @Override
+        public int compare(String[] o1, String[] o2) {
+            return Arrays.toString(o1).compareTo(Arrays.toString(o2));
+        }
+    }
+
+    static ArrayList<String[]> missHouseMeal(String[] sideDishes) {
+        // TODO:
+        Arrays.sort(sideDishes);
+        ArrayList<String[]> result = new ArrayList<String[]>();
+
+        // 원소 갯수
+        // 0일 경우, 빈 리스트 추가
+        result.add(new String[]{});
+        // 1 이상
+        for (int i = 1; i <= sideDishes.length; i++) {
+            //조합
+            combination(result, sideDishes, new boolean[sideDishes.length], 0, sideDishes.length, i);
+        }
+
+        // 문자열로 바꿔서 정렬 후 다시 배열로?..
+        // 그냥 Comparator 구현
+        Collections.sort(result, new StringArrayComparator());
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<String[]> output = missHouseMeal(new String[]{"eggroll", "kimchi", "fishSoup"});
+
+        for(String[] i : output) {
+            System.out.println(Arrays.toString(i));
+        }
+        /*
+        [ [],
+          [eggroll, fishSoup, kimchi],
+          [eggroll, fishSoup],
+          [eggroll, kimchi],
+          [eggroll],
+          [fishSoup, kimchi],
+          [fishSoup],
+          [kimchi],
+        ]
+        */
   }
 }
