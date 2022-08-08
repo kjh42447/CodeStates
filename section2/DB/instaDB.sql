@@ -13,7 +13,7 @@ CREATE TABLE follow (
     follow_ID varchar(20) not null,
 
     PRIMARY KEY(ID, follow_ID),
-    FOREIGN KEY(ID) REFERENCES user (ID)
+    FOREIGN KEY(ID) REFERENCES user (ID) ON DELETE CASCADE
 );
 
 CREATE TABLE post (
@@ -22,7 +22,7 @@ CREATE TABLE post (
     content_link varchar(100) not null,
 
     PRIMARY KEY(post_ID),
-    FOREIGN KEY(ID) REFERENCES user (ID)
+    FOREIGN KEY(ID) REFERENCES user (ID) ON DELETE CASCADE
 );
 
 CREATE TABLE like (
@@ -30,7 +30,7 @@ CREATE TABLE like (
     like_ID varchar(20) not null,
 
     PRIMARY KEY(post_ID, like_ID),
-    FOREIGN KEY(post_ID) REFERENCES post (post_ID)
+    FOREIGN KEY(post_ID) REFERENCES post (post_ID) ON DELETE CASCADE
 );
 
 CREATE TABLE comment (
@@ -40,8 +40,8 @@ CREATE TABLE comment (
     comment varchar(100) not null,
 
     PRIMARY KEY(comment_num),
-    FOREIGN KEY(post_ID) REFERENCES post (post_ID),
-    FOREIGN KEY(ID) REFERENCES user (ID)
+    FOREIGN KEY(post_ID) REFERENCES post (post_ID) ON DELETE CASCADE,
+    FOREIGN KEY(ID) REFERENCES user (ID) ON DELETE CASCADE
 );
 
 CREATE TABLE hashtag (
@@ -49,5 +49,5 @@ CREATE TABLE hashtag (
     hashtag varchar(20) not null,
 
     PRIMARY KEY(post_ID),
-    FOREIGN KEY(post_ID) REFERENCES post (post_ID)
+    FOREIGN KEY(post_ID) REFERENCES post (post_ID)  ON DELETE CASCADE
 );
