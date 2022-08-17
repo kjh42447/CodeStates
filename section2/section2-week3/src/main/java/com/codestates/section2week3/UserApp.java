@@ -3,13 +3,14 @@ package com.codestates.section2week3;
 import com.codestates.section2week3.user.User;
 import com.codestates.section2week3.user.UserGrade;
 import com.codestates.section2week3.user.UserService;
-import com.codestates.section2week3.user.UserServiceImpl;
+import org.apache.catalina.core.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class UserApp {
     public static void main(String[] args) {
-//        UserService userService = new UserServiceImpl();
-        AppConfig appConfig = new AppConfig();
-        UserService userService = appConfig.userService();
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        UserService userService = ac.getBean("userService", UserService.class);
+
         User user = new User (0L, "kimcoding", UserGrade.GRADE_2);
         userService.signup(user);
 

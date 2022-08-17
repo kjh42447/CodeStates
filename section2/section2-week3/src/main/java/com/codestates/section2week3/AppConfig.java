@@ -8,21 +8,31 @@ import com.codestates.section2week3.user.UserRepository;
 import com.codestates.section2week3.user.UserRepositoryImpl;
 import com.codestates.section2week3.user.UserService;
 import com.codestates.section2week3.user.UserServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration  //구성정보 담당 선언
+@ComponentScan
 public class AppConfig {
-    public UserService userService() {
-        return new UserServiceImpl(new UserRepositoryImpl());
-    }
-
-    public UserRepository userRepository() {
-        return new UserRepositoryImpl();
-    }
-
-    public OrderService orderService() {
-        return new OrderServiceImpl(new UserRepositoryImpl(), new CurrentDiscountInfo());
-    }
-
-    public DiscountInfo discountInfo() {
-        return new CurrentDiscountInfo();
-    }
+//    @Autowired로 자동으로 생성해줄 내용
+//    @Bean
+//    public UserService userService() {
+//        return new UserServiceImpl(new UserRepositoryImpl());
+//    }
+//
+//    @Bean
+//    public UserRepository userRepository() {
+//        return new UserRepositoryImpl();
+//    }
+//
+//    @Bean
+//    public OrderService orderService() {
+//        return new OrderServiceImpl(new UserRepositoryImpl(), new CurrentDiscountInfo());
+//    }
+//
+//    @Bean
+//    public DiscountInfo discountInfo() {
+//        return new CurrentDiscountInfo();
+//    }
 }

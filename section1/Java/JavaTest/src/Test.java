@@ -2,77 +2,67 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Test {
-    static void combination(ArrayList<String[]> result, String[] arr, boolean visited[], int depth, int n, int r){
-        if (r == 0) {
-            ArrayList<String> s = new ArrayList<>();
-            for (int i = 0; i < visited.length; i++) {
-                if (visited[i]) {
-                    s.add(arr[i]);
-                }
-            }
-            result.add(s.toArray(new String[s.size()]));
-            return;
-        }
 
-        if(depth==n){
-            return;
-        }
-
-        visited[depth] = true;
-        combination(result, arr, visited,depth+1, n, r-1);
-
-        visited[depth] = false;
-        combination(result, arr, visited,depth+1, n, r);
-
-        return;
-    }
-
-    // 문자열 배열 정렬 비교자 클래스
-    public static class StringArrayComparator implements Comparator<String[]> {
-
-        @Override
-        public int compare(String[] o1, String[] o2) {
-            return Arrays.toString(o1).compareTo(Arrays.toString(o2));
-        }
-    }
-
-    static ArrayList<String[]> missHouseMeal(String[] sideDishes) {
+    public static ArrayList<String> dfs(tree node) {
         // TODO:
-        Arrays.sort(sideDishes);
-        ArrayList<String[]> result = new ArrayList<String[]>();
-
-        // 원소 갯수
-        // 0일 경우, 빈 리스트 추가
-        result.add(new String[]{});
-        // 1 이상
-        for (int i = 1; i <= sideDishes.length; i++) {
-            //조합
-            combination(result, sideDishes, new boolean[sideDishes.length], 0, sideDishes.length, i);
-        }
-
-        // 문자열로 바꿔서 정렬 후 다시 배열로?..
-        // 그냥 Comparator 구현
-        Collections.sort(result, new StringArrayComparator());
-
+        ArrayList<String> result = new ArrayList<>();
+        treeBFS(node, result, new ArrayList<tree>());
         return result;
     }
 
-    public static void main(String[] args) {
-        ArrayList<String[]> output = missHouseMeal(new String[]{"eggroll", "kimchi", "fishSoup"});
-
-        for(String[] i : output) {
-            System.out.println(Arrays.toString(i));
+    //dfs
+    public static void treeBFS(tree node, ArrayList<String> result, ArrayList<tree> q) {
+        tree nownode;
+        q.add(node);
+        result.add(node.getValue());
+        while (q.size() != 0) {
+            nownode = q.remove(0);
+            if (nownode.getChildrenNode() != null) {
+                for (int i = 0; i < nownode.getChildrenNode().size(); i++) {
+                    q.add(nownode.getChildrenNode().get(i));
+                    result.add(nownode.getChildrenNode().get(i).getValue());
+                }
+            }
         }
-        /*
-        [ [],
-          [eggroll, fishSoup, kimchi],
-          [eggroll, fishSoup],
-          [eggroll, kimchi],
-          [eggroll],
-          [fishSoup, kimchi],
-          [fishSoup],
-          [kimchi],
-        ]
-        */
+    }
+
+    //아래 클래스의 내용은 수정하지 말아야 합니다.
+    public static class tree {
+        private String value;
+        private ArrayList<tree> children;
+
+        public tree(String data) {
+            this.value = data;
+            this.children = null;
+        }
+
+        public tree addChildNode(tree node) {
+            if(children == null) children = new ArrayList<>();
+            children.add(node);
+            return children.get(children.size() - 1);
+        }
+
+        public String getValue() {      //현재 노드의 데이터를 반환
+            return value;
+        }
+
+        public ArrayList<tree> getChildrenNode() {
+            return children;
+        }
+    }
+
+    public static void main(String[] args) {
+        tree root = new tree("1");
+        tree rootChild1 = root.addChildNode(new tree("2"));
+        tree rootChild2 = root.addChildNode(new tree("3"));
+        tree leaf1 = rootChild1.addChildNode(new tree("4"));
+        tree leaf2 = rootChild1.addChildNode(new tree("5"));
+        ArrayList<String> output = dfs(root);
+        System.out.println(output); // --> ["1", "2", "4", "5", "3"]
+
+        leaf1.addChildNode(new tree("6"));
+        rootChild2.addChildNode(new tree("7"));
+        output = dfs(root);
+        System.out.println(output); // --> ["1", "2", "4", "6", "5", "3", "7"]
   }
 }

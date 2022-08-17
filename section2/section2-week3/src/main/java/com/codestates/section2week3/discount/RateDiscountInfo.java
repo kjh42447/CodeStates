@@ -2,7 +2,9 @@ package com.codestates.section2week3.discount;
 
 import com.codestates.section2week3.user.User;
 import com.codestates.section2week3.user.UserGrade;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RateDiscountInfo implements DiscountInfo{
     private int grade_1_Rate = 5;
     private int grade_2_Rate = 10;
