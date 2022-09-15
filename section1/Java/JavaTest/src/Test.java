@@ -3,44 +3,42 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Test {
-
-    public static int orderOfPresentation(int N, int[] K) {
+    public static int[] quickSort(int[] arr) {
         // TODO:
-        int result = 0;
-        boolean[] visited = new boolean[N];
+        divNCon(arr, 0, arr.length-1);
+        return arr;
+    }
 
-        for (int i = 0; i < N; i++) {
-            int facCount = N-i-1;
-            int fac = 1;
-            int mulCount = K[i]-1;
+    public static void divNCon(int[] arr, int start, int end) {
+        if (start >= end) return;
 
-            for (int j = 1; j <= facCount; j++) {
-                fac *= j;
+        int mid = partition(arr,start,end);
+        divNCon(arr,start,mid-1);
+        divNCon(arr,mid,end);
+    }
+
+    public static int partition(int[] arr, int start, int end) {
+        int pivot=arr[(start+end)/2];
+        while(start <= end) {
+            while(arr[start] < pivot) start++;
+            while(arr[end] > pivot) end--;
+            if(start <= end) {
+                int tmp = arr[start];
+                arr[start] = arr[end];
+                arr[end] = tmp;
+                start++;
+                end--;
             }
-
-            for (int j = 0; j < K[i]-1; j++) {
-                if (visited[j]){
-                    mulCount--;
-//                    System.out.println(j);
-                }
-            }
-            visited[K[i]-1] = true;
-            result += fac*mulCount;
-//            System.out.println(Arrays.toString(visited));
-//            System.out.printf("i : %d, K[i] : %d, mC = %d, fac : %d, re : %d\n", i, K[i], mulCount, fac, result);
         }
-
-        return result;
+        return start;
     }
 
     public static void main(String[] args) {
-        int output = orderOfPresentation(3, new int[]{2, 3, 1});
-        System.out.println(output); // 3
-
-        output = orderOfPresentation(5, new int[]{1, 3, 2, 4, 5});
-        System.out.println(output); // 6
-
-        output = orderOfPresentation(7, new int[]{7, 6, 5, 4, 3, 2, 1});
-        System.out.println(output); // 6
+        int[] arr = new int[100000];
+        for(int i = 0; i < 100000; i++) {
+            arr[i] = 99999-i;
+        }
+        int[] output = quickSort(arr);
+        System.out.println(Arrays.toString(output)); // --> [1, 3, 21]
   }
 }
