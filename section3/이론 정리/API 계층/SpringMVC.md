@@ -7,7 +7,7 @@ MVC의 의미
 - C(Controller) : 클라이언트 측의 요청을 직접적으로 전달 받는 엔드포인트, Model과 View 사이에서 상호 작용 담당
    
 Spring MVC 동작 방식 및 구성요소
-![Spring MVC 동작 빙식 및 구성요소](https://s3.ap-northeast-2.amazonaws.com/urclass-images/mOBBYB4R6JbDjgJ32DNif-1655088735317.png)
+![Spring MVC 동작 방식 및 구성요소](https://s3.ap-northeast-2.amazonaws.com/urclass-images/mOBBYB4R6JbDjgJ32DNif-1655088735317.png)
 1. 클라이언트가 요청을 전송하면 DispatcherServlet 클래스에 요청이 전달
 2. DispatcherServlet은 해당 요청을 처리할 Controller에 대한 검색을 HandlerMapping 인터페이스에 요청
 3. HandlerMapping에서 해당하는 핸들러 객체(Controller 클래스 내에 구현된 요청 처리 메서드를 포함한 객체) 리턴
