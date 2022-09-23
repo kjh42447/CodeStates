@@ -42,3 +42,9 @@ Spring MVC 기반 어플리케이션의 인증과 인가 기능을 지원하는 
 8. AuthenticationProvider는 인증된 Authentication을 ProviderManager에 전달
 9. ProviderManager는 인증된 Authentication을 UsernamePasswordAuthenticationFilter에 전달
 10. UsernamePasswordAuthenticationFilter는 SecurityContextHolder를 이용해 SecurityContext에 인증된 Authentication을 저장
+
+### Spring Security의 권한 부여 처리 흐름
+1. Spring Security Filter Chain의 AuthorizationFilter는 SecurityContextHolder로 부터 Authentication을 획득
+2. AuthorizationFilter는 Authentication과 HttpServletRequest를 AuthorizationManager(인터페이스)에 전달
+3. AuthorizationManager의 구현체 중 하나인 RequestMatcherDelegatingAuthorizationManager내부에서 매치되는 AuthorizationManager구현 클래스가 있다면 해당 AuthorizationManager구현 클래스가 사용자의 권한을 체크
+4. 적절한 권한이라면 다음 프로세스를 진행, 적절한 권한이 아니라면 AccessDeniedException throw 되고 ExceptionTranslationFilter가 Exception처리
